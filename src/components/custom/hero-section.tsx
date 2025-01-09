@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getUserMeLoader } from "@/data/services/get-user-me-loader";
 import { StrapiImage } from "@/components/custom/strapi-image";
 
 interface Image {
@@ -24,29 +25,33 @@ interface HeroSectionProps {
     link: Link;
 }
 
-export function HeroSection({ data }: { readonly data: HeroSectionProps }) {
-  const {heading, subHeading, image, link } = data;
+export async function HeroSection({ data }: { readonly data: HeroSectionProps }) {
+  const user = await getUserMeLoader();
+  const userLoggedIn = user?.ok;
+  const { heading, subHeading, image, link } = data;
+  const linkUrl = userLoggedIn ? "/dashboard" : link.url;
+
+  
   return (
     <header className="relative h-[600px] overflow-hidden">
       <StrapiImage
-        alt={ image.alternativeText ?? "no alternative text"}
+        alt={ image?.alternativeText ?? "no alternative text"}
         className="absolute inset-0 object-cover w-full h-full"
         src={image.url}
         height={1080}
         width={1920}
+        priority={true}
       />
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white bg-black bg-opacity-20">
         <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">
           {heading}
         </h1>
-        <p className="mt-4 text-lg md:text-xl lg:text-2xl">
-          {subHeading}
-        </p>
+        <p className="mt-4 text-lg md:text-xl lg:text-2xl">{subHeading}</p>
         <Link
           className="mt-8 inline-flex items-center justify-center px-6 py-3 text-base font-medium text-black bg-white rounded-md shadow hover:bg-gray-100"
-          href={link.url}
+          href={linkUrl}
         >
-          {link.text}
+          {userLoggedIn ? "Dashboard" : link.text}
         </Link>
       </div>
     </header>
