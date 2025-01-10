@@ -26,7 +26,7 @@ export function SummaryCardForm({
     // const deleteSummaryById = deleteSummaryAction.bind(null, item.documentId);
 
     return (
-        <Card className={cn("mb-8 reltaive h-auto", className)}>
+        <Card className={cn("mb-8 relative h-auto", className)}>
             <CardHeader>
                 <CardTitle>Video Summary</CardTitle>
             </CardHeader>
