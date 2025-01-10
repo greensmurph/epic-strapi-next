@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getSummaries } from "@/data/loader";
+import { getSummaries } from "@/data/loaders";
 import ReactMarkdown from "react-markdown";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
